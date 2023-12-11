@@ -25,12 +25,13 @@ public class ToothcareJava {
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
             } catch (IOException | InterruptedException e) {
             }
+            // welcome screen
             System.out.println("__________________________________");
             System.out.println("Welcome to the \"Tooth Care\" ");
             System.out.println("__________________________________");
             menu();
             System.out.println("__________________________________");
-
+// menu option
             System.out.print("Enter option: ");
             String slection = scanner.nextLine();
 
@@ -72,7 +73,7 @@ public class ToothcareJava {
         System.out.println("10.Exit");
 
     }
-
+// available treatment details
     private static void saveTreatments() {
         Treatment t1 = new Treatment("Filling", 100);
         Treatment t2 = new Treatment("Whitening", 200);

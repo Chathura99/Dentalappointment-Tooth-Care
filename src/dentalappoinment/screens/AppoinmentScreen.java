@@ -21,7 +21,7 @@ import dentalappointment.data.Treatment;
 public class AppoinmentScreen {
 
     static Scanner scanner = new Scanner(System.in);
-
+// make an appointment function
     public void addAppoiment() {
         displayAvailableChannellingSlots();
 
@@ -60,16 +60,16 @@ public class AppoinmentScreen {
         // Ask for additional details
         System.out.println("Type Patient Name: ");
         String patientName = scanner.nextLine();
-
+        // ask pateint address
         System.out.println("Type Patient Address: ");
         String address = scanner.nextLine();
-
+        //ask patient mobile number
         System.out.println("Type Patient Telephone Number: ");
         String telephoneNumber = scanner.nextLine();
 
         // Calculate registration fee
         int registrationFee = 1000;
-
+        // set the apoointment
         Appointments appointment = new Appointments();
         appointment.setId(String.valueOf(patientId));
         appointment.setDate(date);
@@ -80,7 +80,7 @@ public class AppoinmentScreen {
         appointment.setName(patientName);
         appointment.setRegistrationFee(registrationFee);
         DataList.appoinmentList.add(appointment);
-
+        // If appointment success show details
         System.out.println("__________________________________");
         displayPatientDetails(appointment, patientName, address, telephoneNumber, registrationFee);
         System.out.println("__________________________________");
@@ -93,6 +93,7 @@ public class AppoinmentScreen {
         scanner.nextLine();
     }
 
+// show the appintment details
     public void displayPatientDetails(
             Appointments appointment, String patientName, String address, String telephoneNumber, int registrationFee) {
         System.out.println("Patient ID: " + appointment.getId());
@@ -103,8 +104,7 @@ public class AppoinmentScreen {
         System.out.println("Time: " + appointment.getTime());
         System.out.println("Registration Fee: LKR " + registrationFee);
     }
-
-
+// to display the available chanelling slots
     public void displayAvailableChannellingSlots() {
         System.out.println("__________________________________");
         System.out.println("Available Channelling Slots:");
@@ -138,7 +138,7 @@ public class AppoinmentScreen {
                 .forEach(appointment -> System.out.println(appointment.getTime()));
         System.out.println();
     }
-
+// chanelling date is available or not
     public boolean isValidChannellingDate(String date) {
         // Implement logic to validate against allowed channelling dates
         return isWeekday(date, DayOfWeek.MONDAY) ||
@@ -146,7 +146,7 @@ public class AppoinmentScreen {
                 isWeekday(date, DayOfWeek.SATURDAY) ||
                 isWeekday(date, DayOfWeek.SUNDAY);
     }
-
+// chanelling time is available or not
     public boolean isValidChannellingTime(String date, String time) {
         // Implement logic to validate against allowed channelling times
         LocalTime channellingStartTime = LocalTime.of(15, 0); // 03:00 PM
@@ -156,19 +156,19 @@ public class AppoinmentScreen {
 
         return enteredTime.isAfter(channellingStartTime) && enteredTime.isBefore(channellingEndTime);
     }
-
+// check the weekday is available
     public boolean isWeekday(String date, DayOfWeek dayOfWeek) {
         LocalDate localDate = LocalDate.parse(date);
         return localDate.getDayOfWeek() == dayOfWeek;
     }
 
-
+// list all apppointment
     public void listAppoinments() {
         listDownAppointments(DataList.appoinmentList);
         System.out.print("Press any key to continue...");
         scanner.nextLine();
     }
-
+// view appointment by given date
     public void viewAppointmentsByDate() {
         System.out.println("Enter Date to filter appointments (YYYY-MM-DD): ");
         String dateToFilter = scanner.nextLine();
@@ -188,7 +188,7 @@ public class AppoinmentScreen {
         scanner.nextLine();
     }
 
-
+// search appointment by patient ID
     public void searchAppoments() {
         System.out.print("Patient Id: ");
         int id = getPatientIdFromUser();
@@ -213,7 +213,7 @@ public class AppoinmentScreen {
         System.out.print("Press any key to continue...");
         scanner.nextLine();
     }
-
+// display all appointment in user friendly manner
     public void listDownAppointments(List<Appointments> list) {
         if (list.isEmpty()) {
             System.out.println("No appointments to display.");
@@ -256,7 +256,7 @@ public class AppoinmentScreen {
 
         return patientId;
     }
-
+// list the treatment list
     public void listTreatments() {
         System.out.println("Available Treatments:");
         System.out.println("1. Cleanings");
@@ -281,7 +281,7 @@ public class AppoinmentScreen {
 
         System.out.println("Bill calculated and added to the total fee for the appointment.");
     }
-
+// get the selected treatment data
     private List<Treatment> getSelectedTreatments() {
         List<Treatment> selectedTreatments = new ArrayList<>();
 
@@ -296,7 +296,7 @@ public class AppoinmentScreen {
 
         return selectedTreatments;
     }
-
+// get treastment names
     private String getTreatmentNameByIndex(int index) {
         switch (index) {
             case 1:
@@ -317,14 +317,14 @@ public class AppoinmentScreen {
     private Treatment getTreatmentByIndex(int index) {
         return DataList.treatmentList.get(index - 1);
     }
-
+// calcuolate total fee by given treatment
     private int calculateTotalFee(List<Treatment> treatments) {
         return treatments.stream()
                 .mapToInt(Treatment::getPrice)
                 .sum();
     }
 
-
+// make payment and print invoice
     public void acceptPaymentAndGenerateInvoice() {
         System.out.print("Enter Patient ID for payment: ");
         String patientId = String.valueOf(getPatientIdFromUser());
@@ -359,7 +359,7 @@ public class AppoinmentScreen {
             System.out.println("Insufficient payment amount. Payment failed.");
         }
     }
-
+// to update appointment details by given patient ID
     public void updateAppointmentDetails() {
         System.out.print("Enter Appointment ID for update: ");
         String appointmentId = scanner.nextLine();
@@ -388,6 +388,7 @@ public class AppoinmentScreen {
         System.out.println("--------------------------------------");
         searchAppoments(Integer.parseInt(appointmentId));
     }
+    // find appointment by iD
     private Appointments findAppointmentById(String appointmentId) {
         return DataList.appoinmentList.stream()
                 .filter(appointment -> appointment.getId().equalsIgnoreCase(appointmentId))
